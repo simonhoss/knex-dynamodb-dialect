@@ -20,10 +20,8 @@ export class DynamoDBTableCompiler extends (TableCompiler as any) {
               AttributeDefinitions: [
                 { AttributeName: "id", AttributeType: "S" }
               ],
-              ProvisionedThroughput: {
-                ReadCapacityUnits: 1,
-                WriteCapacityUnits: 1
-              }
+              ProvisionedThroughput: this.client.connectionSettings
+                .provisionedThroughput
             },
             (err: any, data: any) => {
               if (err && err.code !== "ResourceInUseException") {
