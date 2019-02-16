@@ -36,7 +36,7 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
         } else if (column.method === "count") {
           return this.selectAggregateCount(dynamodb, column, scanParam);
         } else {
-          console.log("yo");
+          throw new Error("Aggregate " + column.method + " not implemented");
         }
       }
     } else {
@@ -381,8 +381,7 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
           reject(err);
           return;
         }
-        // console.log(res);
-        // resolve(res);
+
         for (const item of data.Items) {
           await this.deleteItem(dynamodb, tableName, item.id);
         }

@@ -82,8 +82,6 @@ export class DynamoDBDialect extends (Client as any) {
         (this.connectionSettings as any).endpoint
       );
     }
-    console.log("acquireRawConnection");
-    console.log(this.connectionSettings);
     return Promise.resolve((this as any).driver) as any;
   }
 
