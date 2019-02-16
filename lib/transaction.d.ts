@@ -1,3 +1,4 @@
+import * as Promise from "bluebird";
 declare const DynamoDBTransaction_base: any;
 export default class DynamoDBTransaction extends DynamoDBTransaction_base {
     constructor(...args: any[]);

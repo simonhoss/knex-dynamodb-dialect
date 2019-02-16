@@ -1,3 +1,4 @@
+import * as Promise from "bluebird";
 // @ts-ignore
 import * as Transaction from "knex/lib/transaction";
 

@@ -1,3 +1,4 @@
+import * as Promise from "bluebird";
 // @ts-ignore
 import * as Client from "knex/lib/client";
 import { DynamoDBQueryCompiler } from "./query/compiler";
