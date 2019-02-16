@@ -10,11 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.404.0",
-    "cuid": "^2.1.6",
-    "knex": "^0.16.3"
+    "cuid": "^2.1.6"
   },
   "devDependencies": {
     "@types/node": "^11.9.4",
     "typescript": "^3.3.3"
+  },
+  "peerDependencies": {
+    "knex": "^0.16.3"
   }
 }
