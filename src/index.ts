@@ -70,12 +70,11 @@ export class DynamoDBDialect extends (Client as any) {
   }
 
   acquireRawConnection() {
-    if (
-      (this.connectionSettings as any).region &&
-      (this.connectionSettings as any).endpoint
-    ) {
+    if (this.connectionSettings.region) {
       (this as any).driver.config.region = (this
         .connectionSettings as any).region;
+    }
+    if (this.connectionSettings.endpoint) {
       (this as any).driver.config.endpoint = (this
         .connectionSettings as any).endpoint;
       (this as any).driver.setEndpoint(
