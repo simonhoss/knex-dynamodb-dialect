@@ -71,14 +71,17 @@ export class DynamoDBDialect extends (Client as any) {
 
   acquireRawConnection() {
     if (this.connectionSettings.region) {
-      (this as any).driver.config.region = (this
-        .connectionSettings as any).region;
+      this.driver.config.region = this.connectionSettings.region;
     }
     if (this.connectionSettings.endpoint) {
-      (this as any).driver.config.endpoint = (this
-        .connectionSettings as any).endpoint;
-      (this as any).driver.setEndpoint(
-        (this.connectionSettings as any).endpoint
+      this.driver.config.endpoint = this.connectionSettings.endpoint;
+      this.driver.setEndpoint(this.connectionSettings.endpoint);
+    } else {
+      this.driver.config.endpoint = `dynamodb.${
+        this.connectionSettings.region
+      }.amazonaws.com`;
+      this.driver.setEndpoint(
+        `dynamodb.${this.connectionSettings.region}.amazonaws.com`
       );
     }
     return Promise.resolve((this as any).driver) as any;
