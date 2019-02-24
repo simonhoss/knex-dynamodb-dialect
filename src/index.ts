@@ -76,7 +76,7 @@ export class DynamoDBDialect extends (Client as any) {
     if (this.connectionSettings.endpoint) {
       this.driver.config.endpoint = this.connectionSettings.endpoint;
       this.driver.setEndpoint(this.connectionSettings.endpoint);
-    } else {
+    } else if (this.connectionSettings.region) {
       this.driver.config.endpoint = `dynamodb.${
         this.connectionSettings.region
       }.amazonaws.com`;
