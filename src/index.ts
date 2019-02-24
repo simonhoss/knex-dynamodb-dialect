@@ -84,6 +84,12 @@ export class DynamoDBDialect extends (Client as any) {
         `dynamodb.${this.connectionSettings.region}.amazonaws.com`
       );
     }
+    if (this.connectionSettings.accessKeyId) {
+      this.driver.config.accessKeyId = this.connectionSettings.accessKeyId;
+    }
+    if (this.connectionSettings.secretAccessKey) {
+      this.driver.config.secretAccessKey = this.connectionSettings.secretAccessKey;
+    }
     return Promise.resolve((this as any).driver) as any;
   }
 
