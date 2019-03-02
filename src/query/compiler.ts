@@ -3,6 +3,7 @@ import * as cuid from "cuid";
 import * as Builder from "knex/lib/query/builder";
 // @ts-ignore
 import * as QueryCompiler from "knex/lib/query/compiler";
+import { isArray } from "lodash";
 const { DynamoDB } = require("aws-sdk");
 
 export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
@@ -11,6 +12,7 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
   }
 
   select() {
+    console.log(DynamoDB);
     const dynamodb = new DynamoDB.DocumentClient(this.client.driver.config);
     const prefix = this.client.connectionSettings.prefix;
     const tableName = prefix + this.single.table;
@@ -30,6 +32,7 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
     if (grouped.columns.length === 1) {
       const column = grouped.columns[0];
 
+      console.log(column);
       if (column.type === "aggregate") {
         if (column.method === "max") {
           return this.selectAggregateMax(dynamodb, column, scanParam);
@@ -38,6 +41,10 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
         } else {
           throw new Error("Aggregate " + column.method + " not implemented");
         }
+      }
+
+      if (column.grouping === "columns" && isArray(column.value)) {
+        scanParam.ProjectionExpression = column.value.join(", ");
       }
     } else {
       debugger;
