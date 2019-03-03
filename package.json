@@ -1,13 +1,26 @@
 {
   "name": "knex-dynamodb-dialect",
   "version": "1.0.0",
-  "description": "",
+  "description": "A knex dynamo db dialect",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
   },
-  "author": "",
+  "homepage": "https://github.com/simonhoss/knex-dynamodb-dialect",
+  "author": "Simon Hoss",
+  "maintainers": [
+    "Simon Hoss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simonhoss/knex-dynamodb-dialect.git"
+  },
+  "keywords": [
+    "knex",
+    "dynamodb",
+    "aws"
+  ],
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.404.0",
