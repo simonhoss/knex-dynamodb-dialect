@@ -12,7 +12,6 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
   }
 
   select() {
-    console.log(DynamoDB);
     const dynamodb = new DynamoDB.DocumentClient(this.client.driver.config);
     const prefix = this.client.connectionSettings.prefix;
     const tableName = prefix + this.single.table;
@@ -32,7 +31,6 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
     if (grouped.columns.length === 1) {
       const column = grouped.columns[0];
 
-      console.log(column);
       if (column.type === "aggregate") {
         if (column.method === "max") {
           return this.selectAggregateMax(dynamodb, column, scanParam);
@@ -128,8 +126,6 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
           columnCount + 100
         );
         filterExpression += `(${innerFilterExpression})`;
-      } else {
-        debugger;
       }
 
       columnCount++;
