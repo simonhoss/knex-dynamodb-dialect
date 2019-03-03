@@ -21,7 +21,7 @@
     "dynamodb",
     "aws"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.404.0",
     "bluebird": "^3.5.3",
