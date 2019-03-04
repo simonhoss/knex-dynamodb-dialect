@@ -40,7 +40,12 @@ describe("when select", () => {
       await knex.select(["column_1", "column_2"]).table("test_table");
       expect(dynamodbMock.scan).toHaveBeenCalledWith(
         {
-          ProjectionExpression: "column_1, column_2",
+          ExpressionAttributeNames: {
+            project_0: "column_1",
+            project_1: "column_2"
+          },
+          ExpressionAttributeValues: {},
+          ProjectionExpression: "project_0, project_1",
           TableName: "test_test_table"
         },
         expect.anything()
@@ -53,6 +58,8 @@ describe("when select", () => {
       await knex.select("*").table("test_table");
       expect(dynamodbMock.scan).toHaveBeenCalledWith(
         {
+          ExpressionAttributeNames: {},
+          ExpressionAttributeValues: {},
           TableName: "test_test_table"
         },
         expect.anything()

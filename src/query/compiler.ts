@@ -18,7 +18,9 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
     const grouped = this.grouped;
 
     const scanParam: any = {
-      TableName: tableName
+      TableName: tableName,
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {}
     };
 
     if (grouped.where) {
@@ -47,7 +49,16 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
         column.value.length > 0 &&
         column.value[0] !== "*"
       ) {
-        scanParam.ProjectionExpression = column.value.join(", ");
+        let count = 0;
+        scanParam.ProjectionExpression = "";
+        for (const value of column.value) {
+          scanParam.ExpressionAttributeNames[`project_${count}`] = value;
+          if (scanParam.ProjectionExpression) {
+            scanParam.ProjectionExpression += ", ";
+          }
+          scanParam.ProjectionExpression += `project_${count}`;
+          count++;
+        }
       }
     }
 
@@ -84,10 +95,7 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
       return;
     }
     let filterExpression = "";
-    if (!scanParam.ExpressionAttributeNames) {
-      scanParam.ExpressionAttributeNames = {};
-      scanParam.ExpressionAttributeValues = {};
-    }
+
     for (const whereItem of where) {
       if (filterExpression) {
         filterExpression += ` ${whereItem.bool} `;
