@@ -1,6 +1,6 @@
 {
   "name": "knex-dynamodb-dialect",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A knex dynamo db dialect",
   "main": "lib/index.js",
   "scripts": {
