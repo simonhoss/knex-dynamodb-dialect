@@ -11,7 +11,7 @@ jest.mock("aws-sdk", () => {
   };
 });
 
-describe("when select with fields", () => {
+describe("when select", () => {
   let knex: Knex;
   beforeEach(() => {
     dynamodbMock = {
@@ -35,14 +35,28 @@ describe("when select with fields", () => {
     });
   });
 
-  it("should add projection", async () => {
-    await knex.select(["column_1", "column_2"]).table("test_table");
-    expect(dynamodbMock.scan).toHaveBeenCalledWith(
-      {
-        ProjectionExpression: "column_1, column_2",
-        TableName: "test_test_table"
-      },
-      expect.anything()
-    );
+  describe("when select with fields", () => {
+    it("should add projection", async () => {
+      await knex.select(["column_1", "column_2"]).table("test_table");
+      expect(dynamodbMock.scan).toHaveBeenCalledWith(
+        {
+          ProjectionExpression: "column_1, column_2",
+          TableName: "test_test_table"
+        },
+        expect.anything()
+      );
+    });
+  });
+
+  describe("when select with *", () => {
+    it("should add projection", async () => {
+      await knex.select("*").table("test_table");
+      expect(dynamodbMock.scan).toHaveBeenCalledWith(
+        {
+          TableName: "test_test_table"
+        },
+        expect.anything()
+      );
+    });
   });
 });

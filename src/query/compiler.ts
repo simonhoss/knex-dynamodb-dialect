@@ -41,7 +41,12 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
         }
       }
 
-      if (column.grouping === "columns" && isArray(column.value)) {
+      if (
+        column.grouping === "columns" &&
+        isArray(column.value) &&
+        column.value.length > 0 &&
+        column.value[0] !== "*"
+      ) {
         scanParam.ProjectionExpression = column.value.join(", ");
       }
     }
