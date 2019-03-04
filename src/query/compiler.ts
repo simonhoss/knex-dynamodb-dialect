@@ -54,11 +54,11 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
         let count = 0;
         scanParam.ProjectionExpression = "";
         for (const value of column.value) {
-          scanParam.ExpressionAttributeNames[`project_${count}`] = value;
+          scanParam.ExpressionAttributeNames[`#project_${count}`] = value;
           if (scanParam.ProjectionExpression) {
             scanParam.ProjectionExpression += ", ";
           }
-          scanParam.ProjectionExpression += `project_${count}`;
+          scanParam.ProjectionExpression += `#project_${count}`;
           count++;
         }
       }

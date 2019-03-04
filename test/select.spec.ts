@@ -41,10 +41,10 @@ describe("when select", () => {
       expect(dynamodbMock.scan).toHaveBeenCalledWith(
         {
           ExpressionAttributeNames: {
-            project_0: "column_1",
-            project_1: "column_2"
+            "#project_0": "column_1",
+            "#project_1": "column_2"
           },
-          ProjectionExpression: "project_0, project_1",
+          ProjectionExpression: "#project_0, #project_1",
           TableName: "test_test_table"
         },
         expect.anything()
