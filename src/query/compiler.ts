@@ -144,6 +144,18 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
           columnCount + 100
         );
         filterExpression += `(${innerFilterExpression})`;
+      } else if (whereItem.type === "whereIn") {
+        const keys: string[] = [];
+        let index = 0;
+        for (const valItem of whereItem.value) {
+          keys.push(`:column_${columnCount}${index}`);
+          scanParam.ExpressionAttributeValues[
+            `:column_${columnCount}${index}`
+          ] = valItem;
+          index++;
+        }
+
+        filterExpression += `#column_${columnCount} in (${keys.toString()})`;
       }
 
       columnCount++;

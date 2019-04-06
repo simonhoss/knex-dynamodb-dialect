@@ -52,6 +52,32 @@ describe("when select", () => {
     });
   });
 
+  describe("when select with query in", () => {
+    it("should add projection", async () => {
+      await knex
+        .select(["column_1", "column_2"])
+        .table("test_table")
+        .whereIn("test_column", ["1", "2"]);
+      expect(dynamodbMock.scan).toHaveBeenCalledWith(
+        {
+          ExpressionAttributeNames: {
+            "#column_0": "test_column",
+            "#project_0": "column_1",
+            "#project_1": "column_2"
+          },
+          ExpressionAttributeValues: {
+            ":column_00": "1",
+            ":column_01": "2"
+          },
+          ProjectionExpression: "#project_0, #project_1",
+          FilterExpression: "#column_0 in (:column_00,:column_01)",
+          TableName: "test_test_table"
+        },
+        expect.anything()
+      );
+    });
+  });
+
   describe("when select with *", () => {
     it("should add projection", async () => {
       await knex.select("*").table("test_table");
