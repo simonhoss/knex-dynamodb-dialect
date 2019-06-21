@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand",
-    "deploy": "npm run build && npm version patch && npm deploy"
+    "deploy": "npm version patch && npm deploy"
   },
   "homepage": "https://github.com/simonhoss/knex-dynamodb-dialect",
   "author": "Simon Hoss",
