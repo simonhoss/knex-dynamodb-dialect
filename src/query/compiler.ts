@@ -118,11 +118,13 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
         } :column_${columnCount}`;
       } else if (whereItem.type === "whereNull") {
         scanParam.ExpressionAttributeValues[`:column_${columnCount}`] = null;
-        filterExpression += `(#column_${columnCount} = :column_${columnCount}`;
 
         let functionName = "attribute_not_exists";
         if (whereItem.not) {
+          filterExpression += `(#column_${columnCount} != :column_${columnCount}`;
           functionName = "attribute_exists";
+        } else {
+          filterExpression += `(#column_${columnCount} = :column_${columnCount}`;
         }
 
         filterExpression += ` or ${functionName}(#column_${columnCount}))`;

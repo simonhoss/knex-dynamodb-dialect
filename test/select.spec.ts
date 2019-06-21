@@ -52,6 +52,58 @@ describe("when select", () => {
     });
   });
 
+  describe("when where null", () => {
+    it("should set correct query", async () => {
+      await knex
+        .select(["column_1", "column_2"])
+        .table("test_table")
+        .whereNull("test_column");
+      expect(dynamodbMock.scan).toHaveBeenCalledWith(
+        {
+          ExpressionAttributeNames: {
+            "#column_0": "test_column",
+            "#project_0": "column_1",
+            "#project_1": "column_2"
+          },
+          ExpressionAttributeValues: {
+            ":column_0": null
+          },
+          ProjectionExpression: "#project_0, #project_1",
+          FilterExpression:
+            "(#column_0 = :column_0 or attribute_not_exists(#column_0))",
+          TableName: "test_test_table"
+        },
+        expect.anything()
+      );
+    });
+  });
+
+  describe("when where not null", () => {
+    it("should set correct query", async () => {
+      await knex
+        .select(["column_1", "column_2"])
+        .table("test_table")
+        .whereNotNull("test_column");
+      expect(dynamodbMock.scan).toHaveBeenCalledWith(
+        {
+          ExpressionAttributeNames: {
+            "#column_0": "test_column",
+            "#project_0": "column_1",
+            "#project_1": "column_2"
+          },
+          ExpressionAttributeValues: {
+            ":column_0": null
+          },
+          ProjectionExpression: "#project_0, #project_1",
+          FilterExpression:
+            "(#column_0 != :column_0 or attribute_exists(#column_0))",
+          TableName: "test_test_table"
+        },
+        expect.anything()
+      );
+    });
+  });
+
   describe("when select with query in", () => {
     it("should add projection", async () => {
       await knex
