@@ -121,7 +121,7 @@ export class DynamoDBQueryCompiler extends (QueryCompiler as any) {
 
         let functionName = "attribute_not_exists";
         if (whereItem.not) {
-          filterExpression += `(#column_${columnCount} != :column_${columnCount}`;
+          filterExpression += `(#column_${columnCount} <> :column_${columnCount}`;
           functionName = "attribute_exists";
         } else {
           filterExpression += `(#column_${columnCount} = :column_${columnCount}`;
