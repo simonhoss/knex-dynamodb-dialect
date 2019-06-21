@@ -96,7 +96,7 @@ describe("when select", () => {
           },
           ProjectionExpression: "#project_0, #project_1",
           FilterExpression:
-            "(#column_0 <> :column_0 or attribute_exists(#column_0))",
+            "(#column_0 <> :column_0 and attribute_exists(#column_0))",
           TableName: "test_test_table"
         },
         expect.anything()
